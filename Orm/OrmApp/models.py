@@ -30,3 +30,9 @@ class Marks(models.Model):
 
     def __str__(self):
         return f"{self.student.name} - Marks"
+
+class Exam(models.Model):
+    exam_starting_date = models.DateField()
+    student = models.ForeignKey(Students, on_delete=models.CASCADE)
+    
+    
