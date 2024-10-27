@@ -36,4 +36,9 @@ class Exam(models.Model):
     student = models.ForeignKey(Students, on_delete=models.CASCADE)
     
 
+class Students_details(models.Model):
+    first_name = models.CharField(max_length=20)
+    second_name = models.CharField(max_length=20)
 
+    def __str__(self):
+        return self.first_name

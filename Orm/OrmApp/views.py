@@ -1,6 +1,6 @@
 from django.http import HttpResponse
-from .models import Students, Marks
-from django.db.models import F, Sum, Q, Func
+from .models import Students, Marks, Students_details
+from django.db.models import F, Sum, Q, Func, Value, FloatField, IntegerField
 from django.db.models.functions import Concat, Coalesce
 def Home(request):
     return HttpResponse("Welcome to the Home Page!")
@@ -39,10 +39,18 @@ def students(request):
     inner_join = Marks.objects.select_related('student').all()
 
     # Calculate square root
-    sqrt = Marks.objects.annotate(sqrt_root=Func(F('maths') + 10, function='SQRT'))
+    sqrt = Marks.objects.annotate(
+    sqrt_root=Func(F('maths') + Value(10.0), function='SQRT', output_field=FloatField())
+    )
+
     update_mark = Marks.objects.filter(id__exact=3).update(maths=100)
     values = Students.objects.values('name', 'year_in_school')
     values_list = Students.objects.values_list('name', flat=False)
+    
+    students_with_scores = Marks.objects.annotate(
+    maths_score=Coalesce('maths', Value(0), output_field=IntegerField())
+)
+
 
 
 
@@ -71,6 +79,20 @@ def students(request):
     for squre in sqrt:
         print(f"{squre} - Square Root (maths + 10): {squre.sqrt_root}")
 
+    for std in students_with_scores:
+        print(f"{std} - maths: {std.maths_score}")
+
     return HttpResponse("Student record created successfully!")
 
 
+def students_details(request):
+    # Annotate queryset with the full name by concatenating first_name and second_name
+    fullname = Students_details.objects.annotate(
+        full_name=Concat(F('first_name'), Value(' '), F('second_name'))
+    )
+
+    # Iterate over the queryset to print each full name
+    for student in fullname:
+        print(student.full_name)  # This will print each full name in the console
+
+    return HttpResponse("Student details successfully!")
