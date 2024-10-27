@@ -35,4 +35,5 @@ class Exam(models.Model):
     exam_starting_date = models.DateField()
     student = models.ForeignKey(Students, on_delete=models.CASCADE)
     
-    
+
+
