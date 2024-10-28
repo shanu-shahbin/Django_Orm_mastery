@@ -22,7 +22,7 @@ class Students(models.Model):
         return self.name if self.name else "Unnamed Student"
 
 class Marks(models.Model):
-    student = models.ForeignKey(Students, on_delete=models.CASCADE)  # Corrected name to 'student'
+    student = models.ForeignKey(Students, on_delete=models.CASCADE, related_name='marks')  # Corrected name to 'student'
     physics = models.FloatField()
     maths = models.FloatField()
     chemistry = models.FloatField()

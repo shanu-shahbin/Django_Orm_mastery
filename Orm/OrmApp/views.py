@@ -37,6 +37,7 @@ def students(request):
 
 
     inner_join = Marks.objects.select_related('student').all()
+    left_join = Students.objects.prefetch_related('marks').all()
 
     # Calculate square root
     sqrt = Marks.objects.annotate(
@@ -55,6 +56,7 @@ def students(request):
 
 
     # Print outputs for debugging purposes
+    print(left_join)
     print(values)
     print(values_list)
     print(student_list)
