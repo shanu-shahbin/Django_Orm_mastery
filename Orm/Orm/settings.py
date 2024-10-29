@@ -19,16 +19,17 @@ ALLOWED_HOSTS = []
 
 
 # Application definition
-
 INSTALLED_APPS = [
+    'grappelli',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'OrmApp',
+    'OrmApp.apps.OrmAppConfig',  # Keep only one instance of OrmApp
 ]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
