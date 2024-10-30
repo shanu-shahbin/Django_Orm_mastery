@@ -63,6 +63,11 @@ def students(request):
             )
             select_all = Students.objects.raw("SELECT * FROM OrmApp_students")
 
+            graduates = Students.objects.graduates()
+
+            # Search for students by name
+            students_named_shahbin = Students.objects.search_by_name("shahbin")
+
             # Print outputs for debugging purposes
             print(left_join)
             print(values)
@@ -81,6 +86,8 @@ def students(request):
             print(total_class_marks)
             print(student_list_in_reverse2)
             print(update_mark)
+            print(students_named_shahbin)
+            print(graduates)
             
             for student_marks in total_marks_students:
                 print(f"{student_marks} - Total Marks: {student_marks.total_marks}")
